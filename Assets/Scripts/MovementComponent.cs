@@ -2,9 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MovementComponent : CharacterBase
+public class MovementComponent : MonoBehaviour
 {
-
+    public float speed;
+    internal bool canMove;
+    protected Rigidbody2D mybody;
+    void Start()
+    {
+        canMove = true;
+        mybody = GetComponent<Rigidbody2D>();
+    }
     void Movement()
     {
 

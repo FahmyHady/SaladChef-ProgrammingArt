@@ -4,17 +4,17 @@ using UnityEngine;
 
 public class ChoppingBoard : MonoBehaviour
 {
-    VegetableType salad = VegetableType.None;
+    VegetableType saladOnBoard = VegetableType.None;
     CharacterBase tempChar;
     int numberOfItemsInSalad;
     private void OnTriggerEnter2D(Collider2D collision)
     {
         tempChar = collision.GetComponent<CharacterBase>();
-        if (numberOfItemsInSalad>1)
+        if (numberOfItemsInSalad > 1)
         {
             tempChar.canPickUpSalad = true;
         }
-        if (salad != VegetableType.All && ( (salad & tempChar.Inventory[0].vegetableType) != tempChar.Inventory[0].vegetableType ))
+        if (saladOnBoard != VegetableType.All && tempChar.Inventory.Count>0 && ((saladOnBoard & tempChar.Inventory[0].vegetableType) != tempChar.Inventory[0].vegetableType))
         {
             tempChar.canChop = true;
         }
@@ -26,18 +26,19 @@ public class ChoppingBoard : MonoBehaviour
     }
     public void AddToSalad(VegetableType vegetableToAdd)
     {
-        if (salad != VegetableType.All)
+        if (saladOnBoard != VegetableType.All)
         {
             numberOfItemsInSalad += 1;
-            salad = salad | vegetableToAdd;
+            saladOnBoard = saladOnBoard | vegetableToAdd;
+            Debug.Log(saladOnBoard);
         }
     }
     public VegetableType GetSalad()
     {
-        VegetableType saladToPlayer = salad;
-        salad = VegetableType.None;
+        VegetableType saladToPlayer = saladOnBoard;
+        saladOnBoard = VegetableType.None;
         numberOfItemsInSalad = 0;
         return saladToPlayer;
     }
-    
+
 }

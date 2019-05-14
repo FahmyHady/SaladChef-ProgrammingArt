@@ -8,11 +8,12 @@ public class VegetableStation : MonoBehaviour
     Vegetable myVegetable;
     private void Start()
     {
-        myVegetable = GetComponent<Vegetable>();
+        myVegetable = GetComponentInChildren<Vegetable>();
     }
     private void OnTriggerEnter2D(Collider2D other)
     {
-        TempChar = other.GetComponent<CharacterBase>();
+
+        TempChar = other.gameObject.GetComponent<CharacterBase>();
         TempChar.vegetableInFrontOfMe= myVegetable;
         TempChar.canPickUpVegetable = true;
     }
@@ -20,5 +21,6 @@ public class VegetableStation : MonoBehaviour
     {
         TempChar.vegetableInFrontOfMe = null;
         TempChar.canPickUpVegetable = false;
+        Debug.Log("out");
     }
 }

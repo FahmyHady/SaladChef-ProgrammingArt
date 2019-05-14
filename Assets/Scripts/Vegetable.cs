@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Vegetable : MonoBehaviour
 {
-    internal bool chopped;
     public VegetableType vegetableType;
 }
 [System.Flags]
