@@ -4,13 +4,35 @@ using UnityEngine;
 
 public class ChefComponent : CharacterBase
 {
+    void AddItem(Vegetable toInstantiate)
+    {
+        if (item1.transform.childCount == 0)
+        {
+            Inventory.Add(Instantiate(toInstantiate, item1.transform));
+            Inventory[0].transform.localPosition = Vector3.zero;
+            Inventory[0].transform.localScale = Vector3.one;
+        }
+        else
+        {
+            Inventory.Add(Instantiate(toInstantiate, item2.transform));
+            Inventory[1].transform.localPosition = Vector3.zero;
+            Inventory[1].transform.localScale = Vector3.one;
+        }
+    }
+    void AddSalad(GameObject toInstantiate)
+    {
 
+        toInstantiate = Instantiate(toInstantiate, saladPos.transform);
+        toInstantiate.transform.localPosition = Vector3.zero;
+        toInstantiate.transform.localScale = Vector3.one;
+    }
     void PickSaladUp()
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
-            saladWithMe.vegetableType = myBoard.GetSalad();
-            Instantiate(saladWithMe, transform.position + childOffset, transform.rotation, transform);
+            saladWithMe = myBoard.GetSalad();
+            AddSalad(saladWithMe);
+            saladWithMeComponent = saladWithMe.GetComponent<Salad>();
             hasSalad = true;
         }
     }
@@ -20,7 +42,7 @@ public class ChefComponent : CharacterBase
         {
             if (vegetableInFrontOfMe && Inventory.Count < 2)
             {
-                Inventory.Add(Instantiate(vegetableInFrontOfMe, transform.position + childOffset, transform.rotation, transform));
+                AddItem(vegetableInFrontOfMe);
             }
 
         }
@@ -30,37 +52,74 @@ public class ChefComponent : CharacterBase
         if (Input.GetKeyDown(KeyCode.Q) && Inventory.Count > 0)
         {
 
-            StartCoroutine(ChoppingInProgress(Inventory[0]));
+            StartCoroutine(ChoppingInProgress(Inventory[0].GetComponent<Vegetable>()));
         }
     }
     IEnumerator ChoppingInProgress(Vegetable vegetableToChop)
     {
-        Inventory.Remove(vegetableToChop);
         myMovement.canMove = false;
         canChop = false;
         yield return new WaitForSeconds(choppingTime);
         myBoard.AddToSalad(vegetableToChop.vegetableType);
+        Inventory.Remove(vegetableToChop);
         Destroy(vegetableToChop.gameObject);
         myMovement.canMove = true;
         canChop = true;
 
     }
+    void PlaceOneVegOnPlate()
+    {
+        if (Input.GetKeyDown(KeyCode.E) && Inventory.Count > 0)
+        {
+            myPlate.vegesOnPlate += 1;
+            Inventory[0].transform.parent = myPlate.transform;
+            Inventory[0].transform.localPosition = Vector3.zero;
+            Inventory.RemoveAt(0);
+        }
+    }
+    void PickUpFromPlate()
+    {
+        if (Input.GetKeyDown(KeyCode.E) && Inventory.Count < 2)
+        {
+            Transform temp = myPlate.transform.GetChild(0).transform;
+            AddItem(temp.GetComponent<Vegetable>());
+            Destroy(temp.gameObject);
+            myPlate.vegesOnPlate -= 1;
 
+        }
+    }
+    void GiveSalad()
+    {
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            customerInFrontOfMe.ReceiveSalad(saladWithMeComponent);
+        }
+    }
     void Update()
     {
-        if (canPickUpVegetable)
+        if (canPickUpVegetable && !hasSalad)
         {
             AddToInventory();
         }
         if (canChop)
         {
-            Debug.Log(canChop);
             StartChop();
         }
-        if (canPickUpSalad)
+        if ( canPickUpSalad && !hasSalad )
         {
             PickSaladUp();
         }
-        Debug.Log(canPickUpVegetable);
+        if (canPlaceOnPlate)
+        {
+            PlaceOneVegOnPlate();
+        }
+        if (canPickUpFromPlate && !hasSalad)
+        {
+            PickUpFromPlate();
+        }
+        if (hasSalad && canGiveSalad)
+        {
+            GiveSalad();
+        }
     }
 }

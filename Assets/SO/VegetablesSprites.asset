@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ea3cabcde766e34d87bcf700eb84dbe, type: 3}
+  m_Name: VegetablesSprites
+  m_EditorClassIdentifier: 
+  Tomato: {fileID: 21300000, guid: d5e0a6b6bee08ce46ae21afdc81f234b, type: 3}
+  Carrot: {fileID: 21300000, guid: cb9235b42b453ba4d91ce1b4353d0e4f, type: 3}
+  Cucumber: {fileID: 21300000, guid: 631bd6a76825dc044a0305bc6b18eff3, type: 3}
+  Mayo: {fileID: 21300000, guid: ab90ff31404b7934fa43754a0abd17e4, type: 3}
+  Chicken: {fileID: 21300000, guid: 75e051afd01ce9641bdc021261664ff8, type: 3}
+  Celery: {fileID: 21300000, guid: 6f431090788e95e4aaabaa7f0c3672df, type: 3}

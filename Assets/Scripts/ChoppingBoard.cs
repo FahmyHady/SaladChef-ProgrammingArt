@@ -4,39 +4,52 @@ using UnityEngine;
 
 public class ChoppingBoard : MonoBehaviour
 {
-    VegetableType saladOnBoard = VegetableType.None;
-    CharacterBase tempChar;
+    Salad saladOnBoard;
+    CharacterBase tempChef;
     int numberOfItemsInSalad;
+    private void Start()
+    {
+        saladOnBoard = GetComponentInChildren<Salad>();
+    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        tempChar = collision.GetComponent<CharacterBase>();
-        if (numberOfItemsInSalad > 1)
+        if (tempChef == null)
         {
-            tempChar.canPickUpSalad = true;
-        }
-        if (saladOnBoard != VegetableType.All && tempChar.Inventory.Count>0 && ((saladOnBoard & tempChar.Inventory[0].vegetableType) != tempChar.Inventory[0].vegetableType))
-        {
-            tempChar.canChop = true;
+
+            tempChef = collision.GetComponent<CharacterBase>();
+            if (numberOfItemsInSalad > 0)
+            {
+                tempChef.canPickUpSalad = true;
+            }
+            if (saladOnBoard.myType != VegetableType.All && tempChef.Inventory.Count > 0)
+            {
+                tempChef.canChop = true;
+            }
         }
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
-        tempChar.canPickUpSalad = false;
-        tempChar.canChop = false;
+        if (collision.gameObject == tempChef.gameObject)
+        {
+
+            tempChef.canPickUpSalad = false;
+            tempChef.canChop = false;
+        }
     }
     public void AddToSalad(VegetableType vegetableToAdd)
     {
-        if (saladOnBoard != VegetableType.All)
+        if (saladOnBoard.myType != VegetableType.All && (saladOnBoard.myType & vegetableToAdd) != vegetableToAdd)
         {
             numberOfItemsInSalad += 1;
-            saladOnBoard = saladOnBoard | vegetableToAdd;
-            Debug.Log(saladOnBoard);
+            saladOnBoard.myType = saladOnBoard.myType | vegetableToAdd;
+            saladOnBoard.SetSaladComponents();
         }
     }
-    public VegetableType GetSalad()
+    public GameObject GetSalad()
     {
-        VegetableType saladToPlayer = saladOnBoard;
-        saladOnBoard = VegetableType.None;
+        GameObject saladToPlayer = Instantiate(saladOnBoard.gameObject, saladOnBoard.transform.position, saladOnBoard.transform.rotation);
+        saladOnBoard.myType = VegetableType.None;
+        saladOnBoard.SetSaladComponents();
         numberOfItemsInSalad = 0;
         return saladToPlayer;
     }

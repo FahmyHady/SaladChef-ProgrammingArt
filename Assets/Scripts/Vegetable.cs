@@ -4,7 +4,47 @@ using UnityEngine;
 
 public class Vegetable : MonoBehaviour
 {
+    public VegetableSO myvegSprites;
+    SpriteRenderer spriteRenderer;
     public VegetableType vegetableType;
+    private void Start()
+    {
+        spriteRenderer = GetComponent<SpriteRenderer>();
+    }
+    private void Update()
+    {
+        if (vegetableType==VegetableType.None && spriteRenderer.sprite !=null) 
+        {
+            spriteRenderer.sprite = null;
+        }
+        if (vegetableType != VegetableType.None && spriteRenderer.sprite == null)
+        {
+            switch (vegetableType)
+            {
+                
+                case VegetableType.Carrot:
+                    spriteRenderer.sprite = myvegSprites.Carrot;
+                    break;
+                case VegetableType.Tomato:
+                    spriteRenderer.sprite = myvegSprites.Tomato;
+                    break;
+                case VegetableType.Cucumber:
+                    spriteRenderer.sprite = myvegSprites.Cucumber;
+                    break;
+                case VegetableType.Celery:
+                    spriteRenderer.sprite = myvegSprites.Celery;
+                    break;
+                case VegetableType.Mayo:
+                    spriteRenderer.sprite = myvegSprites.Mayo;
+                    break;
+                case VegetableType.Chicken:
+                    spriteRenderer.sprite = myvegSprites.Chicken;
+                    break;
+             
+               
+            }
+        }
+    }
 }
 [System.Flags]
 public enum VegetableType
