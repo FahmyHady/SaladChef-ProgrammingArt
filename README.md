@@ -3,7 +3,7 @@ A task for Realworld-one
 Play with one of your friends and compete each other to get the highest score.
 
 Manual:
-PlayerOne uses WASD to move.  E to interact (pickup, throw, give to customer).  Q to chop (at chopping board)
+PlayerOne uses WASD to move.  E to interact (pickup, throw, give to customer).  Q to chop (at chopping board)	(/n)
 PlayerTwo uses ARROW keys to move. K to interact. L to chop.
 The player can only carry two vegetables at one time.
 The player may place 1 vegetable on his plate.
