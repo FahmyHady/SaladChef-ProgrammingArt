@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4229a427a214484dbcebc230dcfeb83, type: 3}
+  m_Name: PickupSprites
+  m_EditorClassIdentifier: 
+  Speed: {fileID: 21300000, guid: e77ccb1b2cf9d1c4cb2663a074e5a4e7, type: 3}
+  Time: {fileID: 21300000, guid: c57fbf1c3283e5441b4218c07040b490, type: 3}
+  Score: {fileID: 21300000, guid: c408bc5f6c3c35442b13cd85f6c24a93, type: 3}

@@ -19,8 +19,10 @@ public class Customer : MonoBehaviour
     Image patienceBarSprite;
     CharacterBase tempChef;
     List<CharacterBase> whoMadeMeAngry = new List<CharacterBase>();
+    GameManager gameManager;
     void Start()
     {
+        gameManager = FindObjectOfType<GameManager>();
         myRequest = GetComponentInChildren<Salad>();
         patienceBarSprite = GetComponentInChildren<Image>();
         allTypes = System.Enum.GetValues(myRequest.myType.GetType());
@@ -29,24 +31,25 @@ public class Customer : MonoBehaviour
             typesToChooseFrom.Add(allTypes.GetValue(i));
         }
         numberOfTypesInRequest = Random.Range(1, 7);
-        SetComponentsType(numberOfTypesInRequest);
+        SetComponentsType();
         myRequest.SetSaladComponents();
         SetPatienceAndScore();
         currentPatience = maxPatience;
         StartCoroutine(DepletePatience());
     }
-    void SetComponentsType(int length)
+    void SetComponentsType()
     {
-        for (int i = 0; i < length; i++)
+        for (int i = 0; i < numberOfTypesInRequest; i++)
         {
 
             temp = (VegetableType)typesToChooseFrom[Random.Range(0, typesToChooseFrom.Count)];
-            typesToChooseFrom.Remove(temp);
             myRequest.myType = myRequest.myType | temp;
+
+            typesToChooseFrom.Remove(temp);
 
         }
     }
-  
+
     void SetPatienceAndScore()
     {
         maxPatience += extraTimePerComponent * numberOfTypesInRequest;
@@ -55,12 +58,31 @@ public class Customer : MonoBehaviour
     IEnumerator DepletePatience()
     {
         yield return new WaitForSeconds(1);
-        currentPatience -= patienceDepletionRate;
+        if (isAngry)
+        {
+            currentPatience -= 1.5f * patienceDepletionRate;
+            patienceBarSprite.color = Color.red;
+        }
+        else
+        {
+            currentPatience -= patienceDepletionRate;
+
+        }
         patienceBarSprite.fillAmount = currentPatience / maxPatience;
         if (currentPatience < 0.1)
         {
-            //TODO minuses both players score
-            //TODO if isAngry minuses who made him angry score
+            if (isAngry)
+            {
+                for (int i = 0; i < whoMadeMeAngry.Count; i++)
+                {
+                    whoMadeMeAngry[i].score -= scoreIGive * 2;
+                }
+            }
+            else
+            {
+                gameManager.MinusBothScores(scoreIGive);
+            }
+            Destroy(gameObject);
         }
         else
         {
@@ -68,19 +90,24 @@ public class Customer : MonoBehaviour
             StartCoroutine(DepletePatience());
         }
     }
-    public bool ReceiveSalad(Salad recievedSalad)
+    public void ReceiveSalad(Salad recievedSalad)
     {
         if (recievedSalad.myType == myRequest.myType)
         {
-            //TODO increaseScore
-            //TODO if 70% of time remaining spawnPickup
-            return true;
+            tempChef.score += scoreIGive;
+
+            if (currentPatience / maxPatience > 0.7f)
+            {
+                gameManager.SpawnPickUp(tempChef.gameObject.layer);
+            }
+
+            Destroy(gameObject);
+
         }
         else
         {
-            //TODO angry
-            //TODO Who made me angry
-            return false;
+            isAngry = true;
+            whoMadeMeAngry.Add(tempChef);
         }
     }
     private void OnTriggerEnter2D(Collider2D collision)

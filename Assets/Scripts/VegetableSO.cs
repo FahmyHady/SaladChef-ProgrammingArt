@@ -11,5 +11,5 @@ public class VegetableSO : ScriptableObject
     public Sprite Mayo;
     public Sprite Chicken;
     public Sprite Celery;
-
+    
 }

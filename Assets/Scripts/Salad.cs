@@ -7,7 +7,7 @@ public class Salad : MonoBehaviour
     public VegetableType myType;
     public Vegetable[] myComponents;
     Array myTypes;
-    void Start()
+    void Awake()
     {
         myTypes = Enum.GetValues(myType.GetType());
         myComponents = GetComponentsInChildren<Vegetable>();

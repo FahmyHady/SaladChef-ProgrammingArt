@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -22,13 +23,13 @@ public class ChefComponent : CharacterBase
     void AddSalad(GameObject toInstantiate)
     {
 
-        toInstantiate = Instantiate(toInstantiate, saladPos.transform);
-        toInstantiate.transform.localPosition = Vector3.zero;
-        toInstantiate.transform.localScale = Vector3.one;
+        saladWithMe = Instantiate(toInstantiate, saladPos.transform);
+        saladWithMe.transform.localPosition = Vector3.zero;
+        saladWithMe.transform.localScale = Vector3.one;
     }
     void PickSaladUp()
     {
-        if (Input.GetKeyDown(KeyCode.E))
+        if (getAxisDown(myInteractAxis))
         {
             saladWithMe = myBoard.GetSalad();
             AddSalad(saladWithMe);
@@ -38,7 +39,7 @@ public class ChefComponent : CharacterBase
     }
     void AddToInventory()
     {
-        if (Input.GetKeyDown(KeyCode.E))
+        if (getAxisDown(myInteractAxis))
         {
             if (vegetableInFrontOfMe && Inventory.Count < 2)
             {
@@ -49,7 +50,7 @@ public class ChefComponent : CharacterBase
     }
     void StartChop()
     {
-        if (Input.GetKeyDown(KeyCode.Q) && Inventory.Count > 0)
+        if (getAxisDown(myChopAxis) && Inventory.Count > 0)
         {
 
             StartCoroutine(ChoppingInProgress(Inventory[0].GetComponent<Vegetable>()));
@@ -69,7 +70,7 @@ public class ChefComponent : CharacterBase
     }
     void PlaceOneVegOnPlate()
     {
-        if (Input.GetKeyDown(KeyCode.E) && Inventory.Count > 0 && myPlate.vegesOnPlate < 1)
+        if (getAxisDown(myInteractAxis) && Inventory.Count > 0 && myPlate.vegesOnPlate < 1)
         {
             myPlate.vegesOnPlate += 1;
             Inventory[0].transform.parent = myPlate.transform;
@@ -80,7 +81,7 @@ public class ChefComponent : CharacterBase
     }
     void PickUpFromPlate()
     {
-        if (Input.GetKeyDown(KeyCode.E) && Inventory.Count < 2 && myPlate.vegesOnPlate > 0)
+        if (getAxisDown(myInteractAxis) && Inventory.Count < 2 && myPlate.vegesOnPlate > 0)
         {
             Transform temp = myPlate.transform.GetChild(0).transform;
             temp.parent = item2.transform;
@@ -93,9 +94,20 @@ public class ChefComponent : CharacterBase
     }
     void GiveSalad()
     {
-        if (Input.GetKeyDown(KeyCode.E))
+        if (getAxisDown(myInteractAxis))
         {
             customerInFrontOfMe.ReceiveSalad(saladWithMeComponent);
+            Destroy(saladWithMe);
+            hasSalad = false;
+        }
+    }
+    private void ThrowSaladInTrash()
+    {
+        if (getAxisDown(myInteractAxis))
+        {
+            Destroy(saladWithMe.gameObject);
+            score -= throwSaladPenatly;
+            hasSalad = false;
         }
     }
     void Update()
@@ -124,10 +136,16 @@ public class ChefComponent : CharacterBase
         {
             GiveSalad();
         }
+        if (canThrowSalad && hasSalad)
+        {
+            ThrowSaladInTrash();
+        }
         if (item2.transform.childCount == 1 && item1.transform.childCount == 0)
         {
             item2.transform.GetChild(0).parent = item1.transform;
             item1.transform.GetChild(0).localPosition = Vector3.zero;
         }
     }
+
+    
 }
