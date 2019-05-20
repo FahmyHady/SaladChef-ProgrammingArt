@@ -11,7 +11,7 @@ public class Plate : MonoBehaviour
         if (tempChef ==null)
         {
             tempChef = collision.gameObject.GetComponent<CharacterBase>();
-            if (vegesOnPlate < 1 && tempChef.Inventory.Count > 0)
+            if ( tempChef.Inventory.Count > 0)
             {
                 tempChef.canPlaceOnPlate = true;
             }
@@ -24,11 +24,13 @@ public class Plate : MonoBehaviour
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (tempChef.gameObject==collision.gameObject)
+        if (tempChef.gameObject == collision.gameObject)
         {
             tempChef.canPlaceOnPlate = false;
             tempChef.canPickUpFromPlate = false;
+            tempChef = null;
+
         }
-    
+
     }
 }

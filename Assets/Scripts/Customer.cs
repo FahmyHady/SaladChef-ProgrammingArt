@@ -6,7 +6,7 @@ public class Customer : MonoBehaviour
 {
     bool isAngry;
     float maxPatience;
-    float currentPatience;
+    public float currentPatience;
     public float patienceDepletionRate;
     public int scoreIGive;
     public float extraTimePerComponent;
@@ -14,6 +14,7 @@ public class Customer : MonoBehaviour
     int numberOfTypesInRequest;
     VegetableType temp;
     System.Array allTypes;
+    List<object> typesToChooseFrom = new List<object>();
     Salad myRequest;
     Image patienceBarSprite;
     CharacterBase tempChef;
@@ -23,48 +24,29 @@ public class Customer : MonoBehaviour
         myRequest = GetComponentInChildren<Salad>();
         patienceBarSprite = GetComponentInChildren<Image>();
         allTypes = System.Enum.GetValues(myRequest.myType.GetType());
-        GenerateRequest();
+        for (int i = 1; i < allTypes.Length - 1; i++)
+        {
+            typesToChooseFrom.Add(allTypes.GetValue(i));
+        }
+        numberOfTypesInRequest = Random.Range(1, 7);
+        SetComponentsType(numberOfTypesInRequest);
         myRequest.SetSaladComponents();
         SetPatienceAndScore();
+        currentPatience = maxPatience;
         StartCoroutine(DepletePatience());
     }
     void SetComponentsType(int length)
     {
         for (int i = 0; i < length; i++)
         {
-            do
-            {
-                temp = (VegetableType)allTypes.GetValue(Random.Range(1, allTypes.Length - 1));
 
-            } while ((myRequest.myType & temp) == temp);
-
+            temp = (VegetableType)typesToChooseFrom[Random.Range(0, typesToChooseFrom.Count)];
+            typesToChooseFrom.Remove(temp);
             myRequest.myType = myRequest.myType | temp;
 
         }
     }
-    void GenerateRequest()
-    {
-
-        switch (Random.Range(1, 5))
-        {
-            case 1:
-                SetComponentsType(1);
-                break;
-            case 2:
-                SetComponentsType(2);
-
-                break;
-            case 3:
-                SetComponentsType(3);
-
-                break;
-            case 4:
-                SetComponentsType(4);
-
-                break;
-
-        }
-    }
+  
     void SetPatienceAndScore()
     {
         maxPatience += extraTimePerComponent * numberOfTypesInRequest;
@@ -75,12 +57,16 @@ public class Customer : MonoBehaviour
         yield return new WaitForSeconds(1);
         currentPatience -= patienceDepletionRate;
         patienceBarSprite.fillAmount = currentPatience / maxPatience;
-        if (currentPatience > 0.1)
+        if (currentPatience < 0.1)
         {
             //TODO minuses both players score
             //TODO if isAngry minuses who made him angry score
         }
-        StartCoroutine(DepletePatience());
+        else
+        {
+
+            StartCoroutine(DepletePatience());
+        }
     }
     public bool ReceiveSalad(Salad recievedSalad)
     {
@@ -113,6 +99,8 @@ public class Customer : MonoBehaviour
         {
             tempChef.canGiveSalad = false;
             tempChef.customerInFrontOfMe = null;
+            tempChef = null;
+
         }
 
     }

@@ -27,6 +27,7 @@ public class VegetableStation : MonoBehaviour
 
             tempChef.vegetableInFrontOfMe = null;
             tempChef.canPickUpVegetable = false;
+            tempChef = null;
         }
     }
 }

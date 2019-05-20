@@ -17,7 +17,7 @@ public class ChoppingBoard : MonoBehaviour
         {
 
             tempChef = collision.GetComponent<CharacterBase>();
-            if (numberOfItemsInSalad > 0)
+            if (numberOfItemsInSalad > 0 && tempChef.Inventory.Count == 0)
             {
                 tempChef.canPickUpSalad = true;
             }
@@ -34,6 +34,8 @@ public class ChoppingBoard : MonoBehaviour
 
             tempChef.canPickUpSalad = false;
             tempChef.canChop = false;
+            tempChef = null;
+
         }
     }
     public void AddToSalad(VegetableType vegetableToAdd)

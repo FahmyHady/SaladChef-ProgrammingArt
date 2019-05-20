@@ -69,23 +69,26 @@ public class ChefComponent : CharacterBase
     }
     void PlaceOneVegOnPlate()
     {
-        if (Input.GetKeyDown(KeyCode.E) && Inventory.Count > 0)
+        if (Input.GetKeyDown(KeyCode.E) && Inventory.Count > 0 && myPlate.vegesOnPlate < 1)
         {
             myPlate.vegesOnPlate += 1;
             Inventory[0].transform.parent = myPlate.transform;
             Inventory[0].transform.localPosition = Vector3.zero;
+
             Inventory.RemoveAt(0);
         }
     }
     void PickUpFromPlate()
     {
-        if (Input.GetKeyDown(KeyCode.E) && Inventory.Count < 2)
+        if (Input.GetKeyDown(KeyCode.E) && Inventory.Count < 2 && myPlate.vegesOnPlate > 0)
         {
             Transform temp = myPlate.transform.GetChild(0).transform;
-            AddItem(temp.GetComponent<Vegetable>());
-            Destroy(temp.gameObject);
+            temp.parent = item2.transform;
+            temp.localPosition = Vector3.zero;
+            temp.localScale = Vector3.one;
+            Inventory.Add(temp.GetComponent<Vegetable>());
             myPlate.vegesOnPlate -= 1;
-
+            canPickUpFromPlate = false;
         }
     }
     void GiveSalad()
@@ -105,7 +108,7 @@ public class ChefComponent : CharacterBase
         {
             StartChop();
         }
-        if ( canPickUpSalad && !hasSalad )
+        if (canPickUpSalad && !hasSalad)
         {
             PickSaladUp();
         }
@@ -120,6 +123,11 @@ public class ChefComponent : CharacterBase
         if (hasSalad && canGiveSalad)
         {
             GiveSalad();
+        }
+        if (item2.transform.childCount == 1 && item1.transform.childCount == 0)
+        {
+            item2.transform.GetChild(0).parent = item1.transform;
+            item1.transform.GetChild(0).localPosition = Vector3.zero;
         }
     }
 }

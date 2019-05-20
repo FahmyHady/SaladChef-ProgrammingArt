@@ -234,10 +234,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eab086c5aa1451346adc8d5963828b23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  patienceDepletionRate: 0
-  scoreIGive: 0
-  extraTimePerComponent: 0
-  extraScorePerComponent: 0
+  patienceDepletionRate: 1
+  scoreIGive: 100
+  extraTimePerComponent: 5
+  extraScorePerComponent: 5
 --- !u!1 &744496502683263141
 GameObject:
   m_ObjectHideFlags: 0
