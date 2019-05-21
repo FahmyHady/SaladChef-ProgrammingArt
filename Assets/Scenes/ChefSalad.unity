@@ -917,6 +917,26 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 9
       objectReference: {fileID: 0}
+    - target: {fileID: 398905607353706967, guid: 9bba2a1b4a981cc4fb3746df3919973a,
+        type: 3}
+      propertyPath: controlID
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 398905607353706967, guid: 9bba2a1b4a981cc4fb3746df3919973a,
+        type: 3}
+      propertyPath: myBoard
+      value: 
+      objectReference: {fileID: 1627038303}
+    - target: {fileID: 398905607353706967, guid: 9bba2a1b4a981cc4fb3746df3919973a,
+        type: 3}
+      propertyPath: myPlate
+      value: 
+      objectReference: {fileID: 1483192121}
+    - target: {fileID: 398905607353706967, guid: 9bba2a1b4a981cc4fb3746df3919973a,
+        type: 3}
+      propertyPath: timeRemaining
+      value: 120
+      objectReference: {fileID: 0}
     - target: {fileID: 398905607353706965, guid: 9bba2a1b4a981cc4fb3746df3919973a,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -986,26 +1006,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Color.b
       value: 0.6432037
-      objectReference: {fileID: 0}
-    - target: {fileID: 398905607353706967, guid: 9bba2a1b4a981cc4fb3746df3919973a,
-        type: 3}
-      propertyPath: controlID
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 398905607353706967, guid: 9bba2a1b4a981cc4fb3746df3919973a,
-        type: 3}
-      propertyPath: myBoard
-      value: 
-      objectReference: {fileID: 1627038303}
-    - target: {fileID: 398905607353706967, guid: 9bba2a1b4a981cc4fb3746df3919973a,
-        type: 3}
-      propertyPath: myPlate
-      value: 
-      objectReference: {fileID: 1483192121}
-    - target: {fileID: 398905607353706967, guid: 9bba2a1b4a981cc4fb3746df3919973a,
-        type: 3}
-      propertyPath: timeRemaining
-      value: 120
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9bba2a1b4a981cc4fb3746df3919973a, type: 3}
@@ -2799,6 +2799,21 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 398905607353706967, guid: 9bba2a1b4a981cc4fb3746df3919973a,
+        type: 3}
+      propertyPath: myBoard
+      value: 
+      objectReference: {fileID: 37832013}
+    - target: {fileID: 398905607353706967, guid: 9bba2a1b4a981cc4fb3746df3919973a,
+        type: 3}
+      propertyPath: myPlate
+      value: 
+      objectReference: {fileID: 5765816902357144665}
+    - target: {fileID: 398905607353706967, guid: 9bba2a1b4a981cc4fb3746df3919973a,
+        type: 3}
+      propertyPath: timeRemaining
+      value: 120
+      objectReference: {fileID: 0}
     - target: {fileID: 398905607353706965, guid: 9bba2a1b4a981cc4fb3746df3919973a,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2853,21 +2868,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 398905607353706967, guid: 9bba2a1b4a981cc4fb3746df3919973a,
-        type: 3}
-      propertyPath: myBoard
-      value: 
-      objectReference: {fileID: 37832013}
-    - target: {fileID: 398905607353706967, guid: 9bba2a1b4a981cc4fb3746df3919973a,
-        type: 3}
-      propertyPath: myPlate
-      value: 
-      objectReference: {fileID: 5765816902357144665}
-    - target: {fileID: 398905607353706967, guid: 9bba2a1b4a981cc4fb3746df3919973a,
-        type: 3}
-      propertyPath: timeRemaining
-      value: 120
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9bba2a1b4a981cc4fb3746df3919973a, type: 3}

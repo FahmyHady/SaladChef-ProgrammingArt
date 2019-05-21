@@ -16,7 +16,7 @@ public class Trash : MonoBehaviour
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (tempChef.gameObject == collision.gameObject)
+        if (tempChef?.gameObject == collision.gameObject)
         {
             tempChef.canThrowSalad = false;
             tempChef = null;

@@ -22,7 +22,7 @@ public class VegetableStation : MonoBehaviour
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (tempChef.gameObject == collision.gameObject)
+        if (tempChef?.gameObject == collision.gameObject)
         {
 
             tempChef.vegetableInFrontOfMe = null;
